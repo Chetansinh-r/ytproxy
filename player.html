@@ -120,13 +120,9 @@
       function setVolume(volumePercent) {
         if (player && typeof volumePercent === "number") {
           try {
-            // Convert 0.0–1.0 input to 0–100 range
-            const scaled = Math.round(
-              Math.max(0, Math.min(1, volumePercent)) * 100
-            );
-            player.setVolume(scaled);
+            player.setVolume(volumePercent);
 
-            if (scaled === 0) player.mute();
+            if (volumePercent === 0) player.mute();
             else player.unMute();
 
           } catch (e) {
