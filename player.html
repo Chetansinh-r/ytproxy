@@ -39,9 +39,9 @@
       };
 
       let player, timer;
-      let lastVolume = -1;
-      let lastMuted = null;
-      let volumeDebounceTimer = null;
+      // let lastVolume = -1;
+      // let lastMuted = null;
+      // let volumeDebounceTimer = null;
 
       function onYouTubeIframeAPIReady() {
         player = new YT.Player("youTubePlayer", {
@@ -122,45 +122,45 @@
 
           
       function setVolume(volumePercent) {
-        try {
-          if (!player || typeof player.setVolume !== "function") return;
+      //   try {
+      //     if (!player || typeof player.setVolume !== "function") return;
       
-          let v = Number(volumePercent);
-          if (isNaN(v)) return;
+      //     let v = Number(volumePercent);
+      //     if (isNaN(v)) return;
       
-          // Clamp 0–100
-          v = Math.max(0, Math.min(100, Math.round(v)));
+      //     // Clamp 0–100
+      //     v = Math.max(0, Math.min(100, Math.round(v)));
       
-          // If same value as last applied, ignore
-          if (v === lastVolume) return;
+      //     // If same value as last applied, ignore
+      //     if (v === lastVolume) return;
       
-          // Clear any pending debounce
-          if (volumeDebounceTimer) {
-            clearTimeout(volumeDebounceTimer);
-            volumeDebounceTimer = null;
-          }
+      //     // Clear any pending debounce
+      //     if (volumeDebounceTimer) {
+      //       clearTimeout(volumeDebounceTimer);
+      //       volumeDebounceTimer = null;
+      //     }
       
-          // Debounce application — only apply after user stops dragging (~100ms)
-          volumeDebounceTimer = setTimeout(() => {
-            try {
-              lastVolume = v;
-              player.setVolume(v);
+      //     // Debounce application — only apply after user stops dragging (~100ms)
+      //     volumeDebounceTimer = setTimeout(() => {
+      //       try {
+      //         lastVolume = v;
+      //         player.setVolume(v);
       
-              const shouldBeMuted = v === 0;
-              if (shouldBeMuted !== lastMuted) {
-                lastMuted = shouldBeMuted;
-                if (shouldBeMuted && typeof player.mute === "function") player.mute();
-                else if (!shouldBeMuted && typeof player.unMute === "function") player.unMute();
-              }
+      //         const shouldBeMuted = v === 0;
+      //         if (shouldBeMuted !== lastMuted) {
+      //           lastMuted = shouldBeMuted;
+      //           if (shouldBeMuted && typeof player.mute === "function") player.mute();
+      //           else if (!shouldBeMuted && typeof player.unMute === "function") player.unMute();
+      //         }
       
-            } catch (e) {
-              console.warn("Debounced setVolume error", e);
-            }
-          }, 100); // 100 ms delay — adjust if needed
+      //       } catch (e) {
+      //         console.warn("Debounced setVolume error", e);
+      //       }
+      //     }, 100); // 100 ms delay — adjust if needed
       
-        } catch (e) {
-          console.warn("setVolume error", e);
-        }
+      //   } catch (e) {
+      //     console.warn("setVolume error", e);
+      //   }
       }
 
       function setPlaybackRate(r) {
